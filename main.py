@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
     print("🎥 Video created at: output/output.mp4")
 
-    # 4. Upload to File.io and get link
-    upload_to_fileio("output/output.mp4")
+    # 4. from upload_to_fileio import upload_to_fileio
+    upload_to_gofile("output/output.mp4")
