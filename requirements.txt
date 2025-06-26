@@ -1,5 +1,5 @@
-moviepy
-pexels_api
-gtts
+moviepy==1.0.3
+pexels_api==1.0.6
+gTTS==2.5.1
 requests
 python-dotenv
