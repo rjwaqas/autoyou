@@ -3,3 +3,4 @@ pexels_api==1.0.1
 gTTS==2.5.1
 requests
 python-dotenv
+pillow==9.5.0
