@@ -1,0 +1,5 @@
+moviepy
+pexels_api
+gtts
+requests
+python-dotenv
