@@ -32,7 +32,7 @@ def create_video_from_images(script, audio_path, output_path):
                 f.write(response.content)
 
             # Create a clip of 3 seconds
-            clip = ImageClip(img_path).set_duration(3)
+            clip = ImageClip(img_path).resize((1280, 720)).set_duration(3)
             clips.append(clip)
         except Exception as e:
             print(f"❌ Error downloading or processing image {img_url}: {e}")
