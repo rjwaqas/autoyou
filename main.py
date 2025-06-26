@@ -9,6 +9,5 @@ if __name__ == "__main__":
     
     script = generate_script(title)
     convert_text_to_speech(script, "voice.mp3")
-    create_video_from_images(script, "voice.mp3", "output.mp4")
-    
+    create_video_from_images(script, "voice.mp3", "output/output.mp4")
     print("🎥 Video created: output.mp4")
