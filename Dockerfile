@@ -17,9 +17,9 @@ RUN python -m venv /opt/venv \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
-RUN mkdir -p /app/output
+RUN mkdir -p /app/output /app/static
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Serve static folder so video becomes accessible
-CMD ["python3", "-m", "http.server", "8080", "--directory", "static"]
+# Run main script + Flask
+CMD ["sh", "-c", "python main.py && cp output/output.mp4 static/output.mp4 && python serve_video.py"]
