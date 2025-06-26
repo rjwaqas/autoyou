@@ -10,10 +10,10 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy your files
+# Copy all local files into container
 COPY . .
 
 # Install Python dependencies
@@ -22,8 +22,11 @@ RUN python -m venv /opt/venv \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# Activate virtual environment on container start
+# ✅ Create output folder to store final video
+RUN mkdir -p /app/output
+
+# Activate the virtual environment on start
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Run the app
+# Run the main script
 CMD ["python", "main.py"]
