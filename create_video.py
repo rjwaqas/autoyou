@@ -1,6 +1,5 @@
 import os
 import requests
-from PIL import Image  # ✅ Required for resampling fix
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 from pexels_api import API
 
@@ -32,10 +31,8 @@ def create_video_from_images(script, audio_path, output_path):
             with open(img_path, "wb") as f:
                 f.write(response.content)
 
-            # ✅ Create resized clip with modern resampling
-            clip = ImageClip(img_path).resize(
-                (1280, 720), resample=Image.Resampling.LANCZOS
-            ).set_duration(3)
+            # ✅ Resize without 'resample' argument
+            clip = ImageClip(img_path).resize((1280, 720)).set_duration(3)
             clips.append(clip)
 
         except Exception as e:
