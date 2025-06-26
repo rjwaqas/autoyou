@@ -19,8 +19,7 @@ RUN python -m venv /opt/venv \
 
 RUN mkdir -p /app/output
 
-# 🟨 TEMPORARILY COMMENT OUT MAIN.PY (we run it manually for now)
-# CMD ["sh", "-c", "python main.py && cd output && python3 -m http.server 8080"]
+ENV PATH="/opt/venv/bin:$PATH"
 
-# ✅ JUST SERVE OUTPUT FOLDER
-CMD ["python3", "-m", "http.server", "8080", "--directory", "output"]
+# ✅ Run main.py and then serve output
+CMD ["sh", "-c", "python main.py && cd output && python3 -m http.server 8080"]
