@@ -1,3 +1,4 @@
+import requests
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 from pexels_api import API
 import os
