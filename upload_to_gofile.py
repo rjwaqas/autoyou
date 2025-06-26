@@ -3,24 +3,32 @@ import requests
 def upload_to_gofile(file_path):
     print("⬆️ Uploading video to GoFile.io...")
 
-    # Get the best server
-    server_res = requests.get("https://api.gofile.io/getServer")
-    server = server_res.json()['data']['server']
+    try:
+        server_res = requests.get("https://api.gofile.io/getServer")
+        if server_res.status_code != 200 or not server_res.text.strip():
+            print("❌ Failed to get GoFile server. Empty or bad response.")
+            print("🔴 Response text:", server_res.text)
+            return
 
-    with open(file_path, 'rb') as f:
-        files = {'file': f}
-        response = requests.post(
-            f"https://{server}.gofile.io/uploadFile",
-            files=files
-        )
+        server = server_res.json()['data']['server']
+        print("🌐 Using server:", server)
 
-    if response.status_code == 200:
-        res_json = response.json()
-        if res_json['status'] == 'ok':
-            download_link = res_json['data']['downloadPage']
-            print("✅ File uploaded!")
-            print("🔗 Download link:", download_link)
+        with open(file_path, 'rb') as f:
+            files = {'file': f}
+            response = requests.post(
+                f"https://{server}.gofile.io/uploadFile",
+                files=files
+            )
+
+        if response.status_code == 200:
+            res_json = response.json()
+            if res_json['status'] == 'ok':
+                print("✅ File uploaded!")
+                print("🔗 Download link:", res_json['data']['downloadPage'])
+            else:
+                print("❌ Upload failed:", res_json)
         else:
-            print("❌ Upload failed:", res_json)
-    else:
-        print("❌ Upload failed:", response.status_code, response.text)
+            print("❌ Upload failed with status:", response.status_code, response.text)
+
+    except Exception as e:
+        print("🔥 Exception during upload:", str(e))
