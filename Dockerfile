@@ -21,5 +21,5 @@ RUN mkdir -p /app/output
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-# ✅ Run main.py and then serve output
-CMD ["sh", "-c", "python main.py && cd output && python3 -m http.server 8080"]
+# Serve static folder so video becomes accessible
+CMD ["python3", "-m", "http.server", "8080", "--directory", "static"]
