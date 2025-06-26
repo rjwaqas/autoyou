@@ -29,4 +29,4 @@ RUN mkdir -p /app/output
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Run the main script
-CMD ["sh", "-c", "python main.py && python serve_video.py"]
+CMD ["python", "serve_video.py"]
