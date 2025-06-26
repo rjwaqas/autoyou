@@ -4,7 +4,7 @@ def upload_to_gofile(file_path):
     print("⬆️ Uploading video to GoFile.io...")
 
     try:
-        server_res = requests.get("https://api.gofile.io/getServer")
+        server_res = requests.get("https://api.gofile.io/v2/getServer")
         if server_res.status_code != 200 or not server_res.text.strip():
             print("❌ Failed to get GoFile server. Empty or bad response.")
             print("🔴 Response text:", server_res.text)
