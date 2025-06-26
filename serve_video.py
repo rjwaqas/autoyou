@@ -1,20 +1,14 @@
-from flask import Flask, send_file
-import os
+from flask import Flask, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 
 @app.route("/")
-def home():
-    return "✅ Video generated! Go to /video to download."
+def index():
+    return "<h2>✅ Video Ready: <a href='/static/output.mp4'>Download Video</a></h2>"
 
-@app.route("/video")
-def get_video():
-    path = "output/output.mp4"
-    if os.path.exists(path):
-        return send_file(path, as_attachment=True)
-    else:
-        return "❌ Video not found", 404
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory("static", filename)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8080)
