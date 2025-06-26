@@ -1,7 +1,7 @@
 # 👇 START WITH A PYTHON BASE IMAGE
 FROM python:3.12-slim
 
-# Install system dependencies needed for Pillow and MoviePy
+# Install system dependencies for Pillow, MoviePy, and Flask
 RUN apt-get update && apt-get install -y \
     gcc \
     libjpeg-dev \
@@ -10,23 +10,24 @@ RUN apt-get update && apt-get install -y \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy all local files into container
+# Copy app files
 COPY . .
 
-# Install Python dependencies
+# Install dependencies
 RUN python -m venv /opt/venv \
     && . /opt/venv/bin/activate \
     && pip install --upgrade pip \
     && pip install -r requirements.txt
 
-# ✅ Create output folder to store final video
+# Create output directory
 RUN mkdir -p /app/output
 
-# Activate the virtual environment on start
-ENV PATH="/opt/venv/bin:$PATH"
+# Expose port for Flask
+EXPOSE 8080
 
-# Run the main script
+# Activate virtual environment and run app
+ENV PATH="/opt/venv/bin:$PATH"
 CMD ["sh", "-c", "python main.py && python serve_video.py"]
