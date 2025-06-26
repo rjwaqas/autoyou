@@ -1,5 +1,6 @@
 import os
 import requests
+from PIL import Image  # ✅ Required for resampling fix
 from moviepy.editor import ImageClip, concatenate_videoclips, AudioFileClip
 from pexels_api import API
 
@@ -12,7 +13,7 @@ def create_video_from_images(script, audio_path, output_path):
     # Initialize Pexels API
     api = API(PEXELS_API_KEY)
 
-    # Use first keyword in script as image topic
+    # Use the first word in the script as a keyword
     keyword = script.split()[0] if script.strip() else "nature"
     print(f"🔍 Searching images for: {keyword}")
     api.search(keyword, results_per_page=5)
@@ -31,16 +32,19 @@ def create_video_from_images(script, audio_path, output_path):
             with open(img_path, "wb") as f:
                 f.write(response.content)
 
-            # Create a clip of 3 seconds
-            clip = ImageClip(img_path).resize((1280, 720)).set_duration(3)
+            # ✅ Create resized clip with modern resampling
+            clip = ImageClip(img_path).resize(
+                (1280, 720), resample=Image.Resampling.LANCZOS
+            ).set_duration(3)
             clips.append(clip)
+
         except Exception as e:
             print(f"❌ Error downloading or processing image {img_url}: {e}")
 
-    # Combine and add audio
     if not clips:
         raise Exception("❌ No clips were created, video cannot be generated.")
 
+    # Combine all image clips and add audio
     video = concatenate_videoclips(clips)
     audio = AudioFileClip(audio_path)
     video = video.set_audio(audio)
@@ -48,9 +52,9 @@ def create_video_from_images(script, audio_path, output_path):
     print("🎬 Writing final video...")
     video.write_videofile(output_path, fps=24)
 
-    # Clean up images
+    # Clean up temporary images
     for i in range(len(photos)):
         try:
             os.remove(f"temp_img_{i}.jpg")
-        except:
+        except Exception:
             pass
