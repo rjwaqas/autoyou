@@ -30,4 +30,5 @@ EXPOSE 8080
 
 # Activate virtual environment and run app
 ENV PATH="/opt/venv/bin:$PATH"
-CMD ["sh", "-c", "python main.py && python serve_video.py"]
+CMD ["python", "serve_video.py"]
+
