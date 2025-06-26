@@ -4,3 +4,4 @@ gTTS==2.5.1
 requests
 python-dotenv
 pillow==9.5.0
+Flask
