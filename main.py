@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
     print("🎥 Video created at: output/output.mp4")
 
-    # 4. Upload video to GoFile.io
-    upload_to_gofile("output/output.mp4")
+    # 4. Upload video to transfer.sh
+   upload_to_transfersh("output/output.mp4")
