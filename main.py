@@ -1,10 +1,10 @@
+print("🚀 App started")
+
 import os
 from generate_script import generate_script
 from create_video import create_video_from_images
 from text_to_speech import convert_text_to_speech
 from upload_to_tempsh import upload_to_tempsh
-
-print("🚀 App started")
 
 if __name__ == "__main__":
     title = os.getenv("YOUTUBE_TITLE", "Default Video Title")
@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
     print("🎥 Video created at: output/output.mp4")
 
-    # 4. Upload to temp.sh
+    # 4. Upload using curl
     upload_to_tempsh("output/output.mp4")
