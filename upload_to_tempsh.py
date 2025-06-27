@@ -1,4 +1,4 @@
-import subprocess
+import requests
 import os
 
 def upload_to_tempsh(file_path):
@@ -6,17 +6,18 @@ def upload_to_tempsh(file_path):
 
     try:
         filename = os.path.basename(file_path)
-        result = subprocess.run(
-            ["curl", "--upload-file", file_path, f"https://temp.sh/{filename}"],
-            capture_output=True, text=True
-        )
+        with open(file_path, 'rb') as f:
+            response = requests.put(
+                f"https://temp.sh/{filename}",
+                data=f
+            )
 
-        if result.returncode == 0:
+        if response.status_code == 200:
             print("✅ File uploaded successfully!")
-            print("🔗 Download link:", result.stdout.strip())
+            print("🔗 Download link:", response.text.strip())
         else:
-            print("❌ Upload failed.")
-            print("stderr:", result.stderr)
+            print("❌ Upload failed with status:", response.status_code)
+            print("🔴 Response text:", response.text)
 
     except Exception as e:
         print("🔥 Exception during upload:", str(e))
