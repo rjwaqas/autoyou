@@ -9,12 +9,17 @@ def upload_to_filepush(file_path):
             response = requests.post("https://www.filepush.co/api/upload", files=files)
 
         if response.status_code == 200:
-            res_json = response.json()
-            if res_json.get("success"):
-                print("✅ File uploaded successfully!")
-                print("🔗 Download link:", res_json["file"]["url"])
-            else:
-                print("❌ Upload failed:", res_json)
+            try:
+                res_json = response.json()
+                if res_json.get("success"):
+                    print("✅ File uploaded successfully!")
+                    print("🔗 Download link:", res_json["file"]["url"])
+                else:
+                    print("❌ Upload failed:", res_json)
+            except Exception as e:
+                print("❌ Failed to parse JSON from response.")
+                print("🔴 Response text:", response.text)
+                print("🔥 Exception:", str(e))
         else:
             print("❌ Upload failed with status:", response.status_code)
             print("🔴 Response text:", response.text)
