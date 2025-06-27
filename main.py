@@ -4,7 +4,7 @@ import os
 from generate_script import generate_script
 from create_video import create_video_from_images
 from text_to_speech import convert_text_to_speech
-from upload_to_gofile import upload_to_gofile  # ✅ Corrected import
+from upload_to_transfersh import upload_to_transfersh  # ✅ Corrected import
 
 if __name__ == "__main__":
     title = os.getenv("YOUTUBE_TITLE", "Default Video Title")
