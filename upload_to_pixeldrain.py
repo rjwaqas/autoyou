@@ -5,7 +5,6 @@ def upload_to_pixeldrain(file_path):
     print("⬆️ Uploading video to PixelDrain...")
 
     api_key = os.getenv("PIXELDRAIN_API_KEY")
-    print("🔐 API Key loaded:", bool(api_key))  # Debug print
 
     if not api_key:
         print("❌ PIXELDRAIN_API_KEY not set in environment.")
@@ -14,10 +13,11 @@ def upload_to_pixeldrain(file_path):
     try:
         with open(file_path, 'rb') as f:
             files = {'file': f}
+            # Username can be anything; API key must be in password
             response = requests.post(
                 "https://pixeldrain.com/api/file",
                 files=files,
-                auth=("user", api_key)  # required format
+                auth=('', api_key)  # Empty username, API key as password
             )
 
         if response.status_code == 200:
