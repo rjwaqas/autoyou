@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
     print("🎥 Video created at: output/output.mp4")
 
-    # 4. Upload
+    # 4. Upload using transfer.sh
     upload_to_transfersh("output/output.mp4")
